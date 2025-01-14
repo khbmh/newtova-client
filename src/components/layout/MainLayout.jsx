@@ -1,0 +1,30 @@
+import { Outlet } from 'react-router';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthProvider';
+import Navbar from '../common/Navbar';
+import Footer from '../common/Footer';
+
+function MainLayout() {
+  const { menuVisible } = useContext(AuthContext);
+  return (
+    <div className="min-h-screen flex flex-col justify-between">
+      <Navbar/>
+      <div className="w-full h-[10vh]"></div>
+
+      <div
+        className={`${
+          menuVisible ? 'invisible' : ''
+        } container mx-auto flex items-center justify-center min-h-[50vh] text-center`}
+      >
+        <Outlet />
+      </div>
+
+      <div className={`${menuVisible ? 'invisible' : ''} w-full h-fit`}>
+        <Footer/>
+      </div>
+    </div>
+
+  );
+}
+
+export default MainLayout;
