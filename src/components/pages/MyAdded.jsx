@@ -1,8 +1,12 @@
+import THelmet from '../common/THelmet';
 
 function MyAdded() {
   return (
-    <div>MyAdded</div>
-  )
+    <div>
+      <THelmet title="My Added Items. | Newtova." />
+      MyAdded
+    </div>
+  );
 }
 
-export default MyAdded
+export default MyAdded;

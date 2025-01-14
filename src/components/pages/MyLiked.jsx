@@ -1,7 +1,10 @@
+import THelmet from "../common/THelmet"
 
 function MyLiked() {
   return (
-    <div>MyLiked</div>
+    <div>
+      <THelmet title="Liked Items. | Newtova." />
+      MyLiked</div>
   )
 }
 
