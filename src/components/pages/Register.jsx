@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthProvider';
 import THelmet from '../common/THelmet';
 
 function Register() {
-  const { signInWithGoogle, handleRegister } = useContext(AuthContext);
+  const { handleRegister } = useContext(AuthContext);
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ function Register() {
           </button>
         </div>
       </form>
-      
+
       <p className="text-sm">
         Already a user?{' '}
         <Link to="/auth/login" className="underline">
