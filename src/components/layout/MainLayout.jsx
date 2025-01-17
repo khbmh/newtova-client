@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
+import ScrollSave from '../utils/ScrollSave';
 
 function MainLayout() {
   const { menuVisible } = useContext(AuthContext);
@@ -16,6 +17,7 @@ function MainLayout() {
           menuVisible ? 'invisible' : ''
         } container mx-auto flex items-center justify-center min-h-[50vh] text-center`}
       >
+        <ScrollSave />
         <Outlet />
       </div>
 

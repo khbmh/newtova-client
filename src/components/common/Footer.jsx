@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 function Footer() {
   return (
     <>
-      <footer className="footer bg-black/40 border-white/50 border-t p-10">
+      <footer className="footer mt-[12vh] bg-black/40 border-white/50 border-t p-10">
         <nav>
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Branding</a>

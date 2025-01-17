@@ -7,6 +7,10 @@
   color: rgb(251, 217, 217);
 }
 
+div {
+  transition: all 0.3s ease-in-out;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
