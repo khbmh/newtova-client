@@ -8,7 +8,7 @@ function MainLayout() {
   const { menuVisible } = useContext(AuthContext);
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <Navbar/>
+      <Navbar />
       <div className="w-full h-[10vh]"></div>
 
       <div
@@ -20,10 +20,9 @@ function MainLayout() {
       </div>
 
       <div className={`${menuVisible ? 'invisible' : ''} w-full h-fit`}>
-        <Footer/>
+        <Footer />
       </div>
     </div>
-
   );
 }
 
