@@ -51,7 +51,7 @@ function Navbar() {
               onClick={() => {
                 handleMenuVisible();
               }}
-              to="add-item"
+              to="add-product"
             >
               Add Product
             </NavLink>
@@ -59,7 +59,7 @@ function Navbar() {
               onClick={() => {
                 handleMenuVisible();
               }}
-              to="all-items"
+              to="all-products"
             >
               All Products
             </NavLink>

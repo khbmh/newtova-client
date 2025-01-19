@@ -6,12 +6,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '../context/AuthProvider';
 import SecTitle from '../common/SecTitle';
 import THelmet from '../common/THelmet';
+import toast from 'react-hot-toast';
 
 function AllItems() {
   const { user, loading } = useContext(AuthContext);
-// const loading = true;
+  // const loading = true;
   if (loading) {
-    return <div className='flex items-center justify-center'>loading...</div>;
+    return <div className="flex items-center justify-center">loading...</div>;
   }
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -55,7 +56,6 @@ function AllItems() {
     },
     onSuccess: (data, variables) => {
       const { productId, upVote } = variables;
-
       // Update the upVotedProducts state
       if (upVote === 1) {
         setUpVotedProducts((prev) => new Set(prev).add(productId));
@@ -76,7 +76,10 @@ function AllItems() {
   const handleUpvote = (product) => {
     const upvoters = product.upvoters || [];
     const hasUpVoted = upvoters.includes(user?.email);
-
+    if (!user) {
+      toast.error('Please login first');
+      return;
+    }
     if (hasUpVoted) {
       // Decrement upVotes
       upvoteMutation.mutate({ productId: product._id, upVote: -1 });

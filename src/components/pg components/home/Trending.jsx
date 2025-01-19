@@ -5,6 +5,7 @@ import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
 
 function Trending() {
   const navigate = useNavigate();
@@ -20,7 +21,9 @@ function Trending() {
   } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const response = await fetch('https://newtova-server.vercel.app/products');
+      const response = await fetch(
+        'https://newtova-server.vercel.app/products',
+      );
       if (!response.ok) {
         throw new Error('Failed to fetch products');
       }
@@ -69,7 +72,10 @@ function Trending() {
     // Ensure upvoters array exists
     const upvoters = product.upvoters || [];
     const hasUpVoted = upvoters.includes(user?.email);
-
+    if (!user) {
+      toast.error('Please login first');
+      return;
+    }
     if (hasUpVoted) {
       // Decrement upVotes
       upvoteMutation.mutate({ productId: product._id, upVote: -1 });
@@ -165,6 +171,7 @@ function Trending() {
       <Link to="/all-products">
         <button className="button my-8">Browse All Products</button>
       </Link>
+      <Toaster/>
     </div>
   );
 }

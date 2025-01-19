@@ -60,61 +60,88 @@ function MyAdded() {
         description="View and manage all the products you've posted on our platform."
       />
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-[#1f1f20] rounded-lg overflow-hidden">
-          <thead>
-            <tr className="bg-gray-800">
-              <th className="px-6 py-3 text-left text-sm font-medium text-white">
-                Product Name
-              </th>
-              <th className="hidden lg:flex px-6 py-3 text-left text-sm font-medium text-white">
-                Votes
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-white">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-white">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id} className="border-b border-white/10">
-                <td className="px-6 py-4 text-sm text-white">{product.name}</td>
-                <td className="hidden lg:flex px-6 py-4 text-sm text-white">
-                  {product.upVotes || 0}
-                </td>
-                <td className="px-6 py-4 text-sm text-white">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      product.status === 'Accepted'
-                        ? 'bg-green-500/20 text-green-500'
-                        : product.status === 'Rejected'
-                        ? 'bg-red-500/20 text-red-500'
-                        : 'bg-yellow-500/20 text-yellow-500'
-                    }`}
-                  >
-                    {product.status || 'Pending'}
-                  </span>
-                </td>
-                <td className="flex flex-col lg:flex-row gap-2 items-center justify-center px-6 py-4 text-sm text-white">
-                  <button
-                    onClick={() => navigate(`/update-product/${product._id}`)}
-                    className="mr-2 px-4 py-2 bg-yellow-100 text-black font-bold rounded-md hover:bg-yellow-200"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDelete(product._id)}
-                    className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
+        {products.length > 0 ? (
+          <table className="min-w-full bg-[#1f1f20] rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-gray-800">
+                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                  Product Name
+                </th>
+                <th className="hidden lg:flex px-6 py-3 text-left text-sm font-medium text-white">
+                  Votes
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product._id} className="border-b border-white/10">
+                  <td className="px-6 py-4 text-sm text-white">
+                    {product.name}
+                  </td>
+                  <td className="hidden lg:flex px-6 py-4 text-sm text-white">
+                    {product.upVotes || 0}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-white">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        product.status === 'Accepted'
+                          ? 'bg-green-500/20 text-green-500'
+                          : product.status === 'Rejected'
+                          ? 'bg-red-500/20 text-red-500'
+                          : 'bg-yellow-500/20 text-yellow-500'
+                      }`}
+                    >
+                      {product.status || 'Pending'}
+                    </span>
+                  </td>
+                  <td className="flex flex-col lg:flex-row gap-2 items-center justify-center px-6 py-4 text-sm text-white">
+                    <button
+                      onClick={() => navigate(`/update-product/${product._id}`)}
+                      className="mr-2 px-4 py-2 bg-yellow-100 text-black font-bold rounded-md hover:bg-yellow-200"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-sm text-white">
+            <p className="my-6 opacity-80 text-xl">No products found.</p>
+            <button
+              onClick={() => navigate('/')}
+              className="px-4 py-2 bg-green-500 text-white font-bold rounded-md hover:bg-green-600"
+            >
+              Go back to Home
+            </button>
+            <button
+              onClick={() => navigate('/add-product')}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600"
+            >
+              Add a new product
+            </button>
+
+            <button
+              onClick={() => navigate('/all-products')}
+              className="mt-4 px-4 py-2 bg-gray-500 text-white font-bold rounded-md hover:bg-gray-600"
+            >
+              Explore products
+            </button>
+          </div>
+        )}
       </div>
       <Toaster />
     </div>
