@@ -9,7 +9,7 @@ function Profile() {
   return (
     <div className="mx-auto max-w-xl gap-8 lg:gap-16 flex flex-col justify-around *:btn *:btn-outline items-center">
       <THelmet title="Profile. | Newtova." />
-      <Link to="/my/added-items">Dashboard</Link>
+      <Link to="/my/added-products">Dashboard</Link>
       {/* <Link to="liked-items">My LikedProducts</Link> */}
       {(role == 'admin' || role == 'moderator') && (
         <Link to="/moderator">Moderator Dashboard</Link>
