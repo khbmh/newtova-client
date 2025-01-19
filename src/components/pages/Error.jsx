@@ -3,7 +3,7 @@ import THelmet from '../common/THelmet';
 
 function Error() {
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center gap-4">
+    <div className="overflow-hidden h-[100vh] w-full flex flex-col items-center justify-center gap-4">
       <THelmet title="Oops." />
       <div className="flex items-center gap-2 justify-around text-xl font-sans">
         <h1 className="text-rose-300/40">404</h1>

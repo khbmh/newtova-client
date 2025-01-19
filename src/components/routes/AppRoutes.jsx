@@ -13,6 +13,15 @@ import Profile from '../pages/Profile';
 import Error from '../pages/Error';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import Moderator from '../layout/Moderator';
+import ProductReviewQueue from '../pages/ProductReviewQueue';
+import ReportedContents from '../pages/ReportedContents';
+import AdminDashboardLayout from '../layout/AdminDashboardLayout';
+import ManageUsers from '../pages/ManageUsers';
+import Statistics from '../pages/Statistics';
+import ManageCoupons from '../pages/ManageCoupons';
+import ModeratorRoutes from './ModeratorRoutes';
+import AdminRoutes from './AdminRoutes';
 
 function AppRoutes() {
   return (
@@ -20,14 +29,39 @@ function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route
-          path="add-item"
+          path="add-product"
           element={
             <PrivateRoutes>
               <AddItem />
             </PrivateRoutes>
           }
         />
-        <Route path="all-items" element={<AllItems />} />
+        <Route path="all-products" element={<AllItems />} />
+        <Route
+          path="moderator"
+          element={
+            <ModeratorRoutes>
+              <Moderator />
+            </ModeratorRoutes>
+          }
+        >
+          {/* <Route index element={<Profile />} /> */}
+          <Route path="product-review" element={<ProductReviewQueue />} />
+          <Route path="reported-contents" element={<ReportedContents />} />
+        </Route>
+        <Route
+          path="admin"
+          element={
+            <AdminRoutes>
+              <AdminDashboardLayout />
+            </AdminRoutes>
+          }
+        >
+          {/* <Route index element={<Profile />} /> */}
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="statistics" element={<Statistics />} />
+          <Route path="coupons" element={<ManageCoupons />} />
+        </Route>
         <Route
           path="my"
           element={
@@ -37,27 +71,20 @@ function AppRoutes() {
           }
         >
           <Route index element={<Profile />} />
-          <Route path="added-items" element={<MyAdded />} />
+          <Route path="added-products" element={<MyAdded />} />
           <Route path="liked-items" element={<MyLiked />} />
         </Route>
       </Route>
-      <Route path="auth" element={<AuthLayout />}>
-        <Route
-          path="login"
-          element={
-            <PublicRoutes>
-              <Login />
-            </PublicRoutes>
-          }
-        />
-        <Route
-          path="register"
-          element={
-            <PublicRoutes>
-              <Register />
-            </PublicRoutes>
-          }
-        />
+      <Route
+        path="auth"
+        element={
+          <PublicRoutes>
+            <AuthLayout />
+          </PublicRoutes>
+        }
+      >
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>

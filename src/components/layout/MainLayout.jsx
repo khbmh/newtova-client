@@ -6,13 +6,16 @@ import Footer from '../common/Footer';
 import ScrollSave from '../utils/ScrollSave';
 
 function MainLayout() {
-  const { menuVisible } = useContext(AuthContext);
+  const { menuVisible, setIsShow } = useContext(AuthContext);
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Navbar />
       <div className="w-full h-[10vh]"></div>
 
       <div
+        onClick={() => {
+          setIsShow(false);
+        }}
         className={`${
           menuVisible ? 'invisible' : ''
         } container mx-auto flex items-center justify-center min-h-[50vh] text-center`}

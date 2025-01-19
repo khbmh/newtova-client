@@ -3,21 +3,23 @@ import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../context/AuthProvider';
 
 function Navbar() {
-  const { user, loading, handleMenuVisible, menuVisible } =
-    useContext(AuthContext);
-  const nickName = (name) => {
-    const firstWord = name.split(' ')[0];
+  const {
+    user,
+    loading,
+    handleMenuVisible,
+    menuVisible,
+    handleSingOut,
+    handleShowHide,
+    isShow,
+  } = useContext(AuthContext);
 
-    const formattedFirstWord =
-      firstWord.charAt(0).toUpperCase() +
-      firstWord.slice(1).toLowerCase() +
-      '.';
-
-    return formattedFirstWord;
+  const logoutHide = () => {
+    handleShowHide();
+    handleSingOut();
   };
 
   return (
-    <div className="fixed top-0 backdrop-blur-sm py-2 px-1 flex justify-between items-center w-full">
+    <div className="fixed z-40 top-0 backdrop-blur-sm py-2 px-1 flex justify-between items-center w-full">
       <div className=" lg:w-[20vw]">
         <Link to="/">
           <h1 className="font-black text-2xl">Newtova.</h1>
@@ -51,7 +53,7 @@ function Navbar() {
               }}
               to="add-item"
             >
-              Add item
+              Add Product
             </NavLink>
             <NavLink
               onClick={() => {
@@ -59,24 +61,24 @@ function Navbar() {
               }}
               to="all-items"
             >
-              All items
+              All Products
             </NavLink>
             <NavLink
               onClick={() => {
                 handleMenuVisible();
               }}
-              to="my/added-items"
+              to="my/added-products"
             >
-              liked items
+              My Products
             </NavLink>
-            <NavLink
+            {/* <NavLink
               onClick={() => {
                 handleMenuVisible();
               }}
               to="my/liked-items"
             >
-              added items
-            </NavLink>
+              Liked Products
+            </NavLink> */}
           </div>
 
           <div className="-mt-[110px] pb-12">
@@ -112,17 +114,17 @@ function Navbar() {
                 to="/my"
                 className="p-1 bg-white/10 text-xl text-rose-200"
               >
-                👋🏻 {nickName(user.displayName)}
+                👋🏻 {user.displayName}
               </Link>
             )}
           </div>
         </div>
 
         <div className="hidden lg:flex flex-col lg:flex-row justify-center gap-1 lg:gap-8 *:px-4 *:py-2 *:rounded-lg ">
-          <NavLink to="all-items">All items</NavLink>
-          <NavLink to="add-item">Add item</NavLink>
-          <NavLink to="my/added-items">added items</NavLink>
-          <NavLink to="my/liked-items">liked items</NavLink>
+          <NavLink to="all-products">All Products</NavLink>
+          <NavLink to="add-product">Add Product</NavLink>
+          <NavLink to="my/added-products">My Products</NavLink>
+          {/* <NavLink to="my/liked-items">likedProducts</NavLink> */}
         </div>
       </div>
       <div className="hidden lg:flex justify-end w-[20vw]">
@@ -133,9 +135,42 @@ function Navbar() {
             <button className="btn btn-ghost border-white/30">login</button>
           </Link>
         ) : (
-          <Link to="/my" className="p-1 text-xl text-rose-200">
-            {nickName(user.displayName)}
-          </Link>
+          <div className="relative">
+            <img
+              onClick={handleShowHide}
+              className="w-[40px] h-[40px] border border-yellow-300/50 rounded-full mx-1 cursor-pointer"
+              src={user.photoURL}
+              alt=""
+            />
+            <div
+              className={` ${
+                isShow ? 'visible' : 'invisible'
+              } absolute bg-[#121111] border border-slate-700/50 w-[200px] rounded-lg mt-2 px-4 py-2 right-0`}
+            >
+              <div className="flex flex-col gap-4">
+                <p className="text-xl font-bold text-yellow-100">
+                  👋🏻 {user.displayName}
+                </p>
+                <Link
+                  onClick={handleShowHide}
+                  to="/my"
+                  className="text-lg px-2"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={logoutHide}
+                  className="btn btn-ghost border-white/30"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+
+            {/* <Link to="/my" className="invisible p-1 text-xl text-rose-200">
+              {nickName(user.displayName)}
+            </Link> */}
+          </div>
         )}
       </div>
     </div>

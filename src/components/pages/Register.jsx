@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../context/AuthProvider';
 import THelmet from '../common/THelmet';
+import axios from 'axios';
 
 function Register() {
   const { handleRegister } = useContext(AuthContext);
@@ -14,12 +15,30 @@ function Register() {
       toast.error('Password should be at least 8 characters long');
       return;
     }
+    const user = {
+      name: userName.value,
+      image: imageLink.value,
+      email: email.value,
+      role: 'user',
+      membership: 'free',
+    };
+
     handleRegister(
       userName.value,
       imageLink.value,
       email.value,
       password.value,
     );
+
+    axios
+      .post('https://newtova-server.vercel.app/users', user)
+      .then(function (response) {
+        // toast.success('User Registration Success');
+      })
+      .catch(function (error) {
+        // console.log(error);
+        // toast.error('Failed to register. Please try again.');
+      });
   };
   return (
     <div className="flex flex-col gap-8 items-center justify-around">

@@ -13,6 +13,10 @@ import auth from '../utils/firebase.config';
 
 export const AuthContext = createContext(null);
 function AuthProvider({ children }) {
+
+  const [isShow, setIsShow] = useState(false);
+  const handleShowHide = () => setIsShow(!isShow);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -36,7 +40,7 @@ function AuthProvider({ children }) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         handleUpdateProfile(userName, imgLink);
-        toast.success('User Registration Success');
+        // toast.success('User Registration Success');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -100,6 +104,9 @@ function AuthProvider({ children }) {
     setLoading,
     signInWithGoogle,
     handleSingOut,
+    handleShowHide,
+    setIsShow,
+    isShow,
   };
   return (
     <AuthContext.Provider value={authData}>
