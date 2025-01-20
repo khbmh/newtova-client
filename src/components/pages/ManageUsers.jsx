@@ -52,7 +52,7 @@ function ManageUsers() {
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-6">Manage Users</h2>
-      <table className="w-screen max-w-[900px] bg-[#1f1f20] rounded-lg overflow-hidden">
+      <table className="w-screen mx-auto max-w-[900px] bg-[#1f1f20] rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-800">
             <th className="px-2 lg:px-6 py-3 text-center text-md font-medium text-white">

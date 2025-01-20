@@ -1,15 +1,29 @@
 import { Link } from 'react-router';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import THelmet from '../common/THelmet';
 import { AuthContext } from '../context/AuthProvider';
 
 function Login() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { signInWithGoogle, handleLogin } = useContext(AuthContext);
 
-  const handleLoginForm = (e) => {
+  const handleLoginForm = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // Set submitting state to true
+
     const { email, password } = e.target;
-    handleLogin(email.value, password.value);
+
+    try {
+      // Call handleLogin and wait for it to complete
+      await handleLogin(email.value, password.value);
+      // If login is successful, you can add a success message or redirect the user
+    } catch (error) {
+      // Handle any errors (e.g., display an error message)
+      console.error('Login failed:', error);
+    } finally {
+      // Reset the submitting state regardless of success or failure
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -42,12 +56,14 @@ function Login() {
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className=" px-4 py-2 mt-4 bg-white/20 border border-transparent hover:border-white/20 hover:bg-white/10 text-xl text-white rounded-xl"
+            disabled={isSubmitting} // Disable the button when submitting
+            className="px-4 py-2 mt-4 bg-white/20 border border-transparent hover:border-white/20 hover:bg-white/10 text-xl text-white rounded-xl"
           >
-            Login
+            {isSubmitting ? 'Loading...' : 'Login'}
           </button>
         </div>
       </form>
+
       <div className="divider -my-3">OR</div>
       <div
         onClick={signInWithGoogle}
@@ -62,6 +78,7 @@ function Login() {
           />
         </button>
       </div>
+
       <p className="text-sm">
         Not a user?{' '}
         <Link to="/auth/register" className="underline">
