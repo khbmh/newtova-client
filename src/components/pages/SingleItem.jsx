@@ -20,7 +20,9 @@ function SingleItem() {
   } = useQuery({
     queryKey: ['product', id], // Unique key for the query
     queryFn: async () => {
-      const response = await fetch(`https://newtova-server.vercel.app/products/${id}`);
+      const response = await fetch(
+        `https://newtova-server.vercel.app/products/${id}`,
+      );
       if (!response.ok) {
         throw new Error('Failed to fetch product data');
       }
@@ -87,7 +89,7 @@ function SingleItem() {
         />
         {/* Featured Badge */}
         {product.isFeatured && (
-          <div className='flex w-full my-3 justify-end items-center'>
+          <div className="flex w-full my-3 justify-end items-center">
             <p className="badge bg-pink-700 text-xs text-white">Featured</p>
           </div>
         )}
@@ -98,7 +100,7 @@ function SingleItem() {
         {/* Description */}
         <div>
           {/* <h2 className="text-2xl font-semibold mb-2">Description</h2> */}
-          <p className="text-gray-300">{product.description}</p>
+          <p className="text-gray-500">{product.description}</p>
         </div>
 
         {/* Owner Info */}
@@ -108,10 +110,12 @@ function SingleItem() {
             <img
               src={product.owner.image}
               alt={product.owner.name}
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full object-cover"
             />
-            <div>
-              <p className="text-lg font-medium">{product.owner.name}</p>
+            <div className="text-left">
+              <p className="text-lg font-medium capitalize">
+                {product.owner.name}
+              </p>
               <p className="text-gray-400">{product.owner.email}</p>
             </div>
           </div>
@@ -149,7 +153,7 @@ function SingleItem() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-gray-800 p-4 rounded-lg">
             <p className="text-gray-400">Views</p>
-            <p className="text-2xl font-bold">{product.views +237}</p>
+            <p className="text-2xl font-bold">{product.views + 237}</p>
           </div>
           <div className="bg-gray-800 p-4 rounded-lg">
             <p className="text-gray-400">Upvotes</p>

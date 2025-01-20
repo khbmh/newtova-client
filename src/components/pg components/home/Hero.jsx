@@ -33,7 +33,7 @@ function Hero() {
           tech enthusiasts. Whether you are a developer, creator, or explorer,
           join us in shaping the future of technology.
         </p>
-        <Link to={user ? '/add-item' : '/auth/login'}>
+        <Link to={user ? '/add-product' : '/auth/login'}>
           <button className="button text-xl cursor-pointer">
             {user ? 'Unleash Your Masterpiece' : 'Get Started'}
           </button>
