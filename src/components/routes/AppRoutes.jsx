@@ -60,9 +60,11 @@ const AppRoutes = [
       {
         path: 'moderator',
         element: (
-          <ModeratorRoutes>
-            <Moderator />
-          </ModeratorRoutes>
+          <PrivateRoutes>
+            <ModeratorRoutes>
+              <Moderator />
+            </ModeratorRoutes>
+          </PrivateRoutes>
         ),
         children: [
           { path: 'product-review', element: <ProductReviewQueue /> },
@@ -72,9 +74,11 @@ const AppRoutes = [
       {
         path: 'admin',
         element: (
-          <AdminRoutes>
-            <AdminDashboardLayout />
-          </AdminRoutes>
+          <PrivateRoutes>
+            <AdminRoutes>
+              <AdminDashboardLayout />
+            </AdminRoutes>
+          </PrivateRoutes>
         ),
         children: [
           { path: 'users', element: <ManageUsers /> },
