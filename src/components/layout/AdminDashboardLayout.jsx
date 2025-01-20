@@ -7,7 +7,7 @@ function AdminDashboardLayout() {
 
   if (loading) return <div>Loading...</div>;
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen overflow-x-hidden">
       {/* Sidebar */}
       <div className="mx-auto bg-[#1f1f20] p-4 w-screen">
         <h2 className="text-xl font-bold text-white mb-6">Admin Dashboard</h2>

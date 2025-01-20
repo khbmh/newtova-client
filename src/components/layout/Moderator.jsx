@@ -2,7 +2,7 @@ import { NavLink, Outlet } from 'react-router';
 
 function Moderator() {
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen overflow-x-hidden">
       {/* Sidebar */}
       <div className="mx-auto bg-[#1f1f20] p-4 w-screen">
         <h2 className="text-3xl font-sans font-bold text-white mb-6">
