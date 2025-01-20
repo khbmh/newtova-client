@@ -1,14 +1,17 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { AuthContext } from '../context/AuthProvider';
+import { useParams, useNavigate } from 'react-router';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { WithContext as ReactTags } from 'react-tag-input';
 import toast, { Toaster } from 'react-hot-toast';
 import THelmet from '../common/THelmet';
 import SecTitle from '../common/SecTitle';
-import { AuthContext } from '../context/AuthProvider';
 
-function AddProduct() {
-  const { user } = useContext(AuthContext); // Get user info from context
+function UpdateItem() {
+  const { id } = useParams(); // Get the product ID from the URL
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // State for form fields
   const [productName, setProductName] = useState('');
@@ -16,6 +19,29 @@ function AddProduct() {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [externalLink, setExternalLink] = useState('');
+
+  // Fetch product data using useQuery
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['product', id], // Unique key for the query
+    queryFn: async () => {
+      const response = await fetch(`https://newtova-server.vercel.app/products/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch product data');
+      }
+      const data = await response.json();
+      // Set form fields with fetched data
+      setProductName(data.name);
+      setProductImage(data.image);
+      setDescription(data.description);
+      setTags(data.tags.map((tag) => ({ id: tag, text: tag })));
+      setExternalLink(data.externalLink);
+      return data;
+    },
+  });
 
   // Handle tag input
   const handleTagAddition = (tag) => {
@@ -36,53 +62,32 @@ function AddProduct() {
       return;
     }
 
-    // Prepare product data
-    const productData = {
+    // Prepare updated product data
+    const updatedProductData = {
       name: productName,
       image: productImage,
       description,
-      owner: {
-        name: user.displayName,
-        image: user.photoURL,
-        email: user.email,
-      },
       tags: tags.map((tag) => tag.text),
       externalLink,
-      timestamp: new Date(), // Save current timestamp
-      status: 'pending',
-      isReported: false,
-      isFeatured: false,
-      views: 0,
-      upVotes: 0,
-      downVotes: 0,
-      comments: [],
-      reports: [],
+      timestamp: new Date(), // Update timestamp
     };
-    // console.log(productData);
 
     try {
-      // Save product to MongoDB (replace with your API endpoint)
-      const response = await fetch('https://newtova-server.vercel.app/products', {
-        method: 'POST',
+      // Send updated product data to the backend
+      const response = await fetch(`https://newtova-server.vercel.app/products/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(productData),
+        body: JSON.stringify(updatedProductData),
       });
 
       if (response.ok) {
-        toast.success('Product added successfully!');
-
-        // Clear form fields
-        setProductName('');
-        setProductImage('');
-        setDescription('');
-        setTags([]);
-        setExternalLink('');
-
+        toast.success('Product updated successfully!');
+        queryClient.invalidateQueries(['product', id]); // Invalidate and refetch data
         navigate('/my/added-products'); // Redirect to My Products page
       } else {
-        toast.error('Failed to add product. Please try again.');
+        toast.error('Failed to update product. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -90,12 +95,20 @@ function AddProduct() {
     }
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error fetching product data.</p>;
+  }
+
   return (
     <div className="-mt-[12vh] container mx-auto">
-      <THelmet title="Add Product | Newtova." />
+      <THelmet title="Update Product | Newtova." />
       <SecTitle
-        title="Add Your Product"
-        description="Share your tech product with the world! Fill out the form below to add your product to our platform."
+        title="Update Your Product"
+        description="Update your tech product details below."
       />
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 space-y-6">
         {/* Product Name */}
@@ -197,7 +210,7 @@ function AddProduct() {
 
         {/* Submit Button */}
         <button type="submit" className="button text-xl font-bold">
-          Submit
+          Update Product
         </button>
       </form>
       <Toaster />
@@ -205,4 +218,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default UpdateItem;

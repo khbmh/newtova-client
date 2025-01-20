@@ -52,16 +52,16 @@ function ManageUsers() {
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-6">Manage Users</h2>
-      <table className="min-w-full bg-[#1f1f20] rounded-lg overflow-hidden">
+      <table className="w-screen max-w-[900px] bg-[#1f1f20] rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-800">
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
+            <th className="px-2 lg:px-6 py-3 text-center text-md font-medium text-white">
               User Name
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
+            <th className="px-2 lg:px-6 py-3 text-center text-md font-medium text-white">
               User Email
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
+            <th className="px-2 lg:px-6 py-3 text-center text-md font-medium text-white">
               Actions
             </th>
           </tr>
@@ -69,9 +69,9 @@ function ManageUsers() {
         <tbody>
           {users.map((user) => (
             <tr key={user._id} className="border-b border-white/10">
-              <td className="px-6 py-4 text-sm text-white">{user.name}</td>
-              <td className="px-6 py-4 text-sm text-white">{user.email}</td>
-              <td className="px-6 py-4 text-sm text-white space-x-2">
+              <td className="px-2 lg:px-6 py-4 text-xs text-white">{user.name}</td>
+              <td className="px-2 lg:px-6 py-4 text-xs text-white">{user.email}</td>
+              <td className="px-2 lg:px-6 py-4 space-y-3 text-xs text-white space-x-2">
                 {user.role === 'moderator' ? (
                   <button
                     onClick={() => updateUserRole(user.email, 'user')}

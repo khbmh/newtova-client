@@ -23,6 +23,7 @@ import ModeratorRoutes from './ModeratorRoutes';
 import AdminRoutes from './AdminRoutes';
 import SingleItem from '../pages/SingleItem';
 import { singleItemLoader } from '../utils/singleItemLoader';
+import UpdateItem from '../pages/UpdateItem';
 
 const AppRoutes = [
   {
@@ -42,6 +43,15 @@ const AppRoutes = [
         element: (
           <PrivateRoutes>
             <SingleItem />
+          </PrivateRoutes>
+        ),
+        loader: singleItemLoader, // Add the loader here
+      },
+      {
+        path: '/update-product/:id',
+        element: (
+          <PrivateRoutes>
+            <UpdateItem />
           </PrivateRoutes>
         ),
         loader: singleItemLoader, // Add the loader here

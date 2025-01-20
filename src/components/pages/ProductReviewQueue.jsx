@@ -128,20 +128,18 @@ function ProductReviewQueue() {
     );
 
   return (
-    <div>
+    <div className="w-screen p-0 mx-auto max-w-[900px]">
       <h2 className="text-2xl font-bold text-white mb-6">
         Product Review Queue
       </h2>
       <table className="min-w-full bg-[#1f1f20] rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-800">
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
+            <th className="px-2 lg:px-6 py-3 text-lg font-medium text-white">
               Product Name
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
-              Status
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-white">
+            <th className="px-2 lg:px-6 py-3 text-lg font-medium text-white">Status</th>
+            <th className="px-2 lg:px-6 py-3 text-lg font-medium text-white">
               Actions
             </th>
           </tr>
@@ -149,12 +147,14 @@ function ProductReviewQueue() {
         <tbody>
           {products.map((product) => (
             <tr key={product._id} className="border-b border-white/10">
-              <td className="px-6 py-4 text-sm text-white">{product.name}</td>
-              <td className="px-6 py-4 text-sm text-white">{product.status}</td>
-              <td className="px-6 py-4 text-sm text-white space-x-2">
+              <td className="px-2 lg:px-6 py-4 text-xs text-white">{product.name}</td>
+              <td className="px-2 lg:px-6 py-4 text-xs text-white">
+                {product.status}
+              </td>
+              <td className="px-2 lg:px-6 py-4 space-y-4 text-xs text-white space-x-2">
                 <Link
                   to={`/product/${product._id}`}
-                  className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600"
+                  className="px-4 py-2 bg-slate-700 text-white font-bold rounded-md hover:bg-blue-600"
                 >
                   View Details
                 </Link>

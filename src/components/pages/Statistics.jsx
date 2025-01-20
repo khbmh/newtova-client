@@ -17,7 +17,7 @@ function Statistics() {
     { name: 'Rejected Products', value: rejectedProducts },
   ];
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', `#115361`];
+  const COLORS = ['#005BB5', '#0aaA61', '#5f5A60', '#Ce6D3D', '#0ffB47'];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -27,7 +27,6 @@ function Statistics() {
     innerRadius,
     outerRadius,
     percent,
-    index,
   }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -65,9 +64,7 @@ function Statistics() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          'https://newtova-server.vercel.app/products',
-        );
+        const response = await fetch('https://newtova-server.vercel.app/products');
         const data = await response.json();
         setProducts(data);
         setPendingProducts(data.filter((p) => p.status === 'pending').length);

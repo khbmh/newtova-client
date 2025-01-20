@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { useParams } from 'react-router'; // Use useParams to get the product ID
+import { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router'; // Use useParams to get the product ID
 import { LuExternalLink } from 'react-icons/lu';
 import { BiUpvote } from 'react-icons/bi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 function SingleItem() {
   const { id } = useParams(); // Get the product ID from the URL
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // Fetch product data using useQuery
@@ -19,9 +20,7 @@ function SingleItem() {
   } = useQuery({
     queryKey: ['product', id], // Unique key for the query
     queryFn: async () => {
-      const response = await fetch(
-        `https://newtova-server.vercel.app/products/${id}`,
-      );
+      const response = await fetch(`https://newtova-server.vercel.app/products/${id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch product data');
       }
@@ -77,7 +76,7 @@ function SingleItem() {
   const hasUpVoted = upvoters.includes(user?.email);
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-8">
+    <div className="text-white min-h-screen p-8">
       {/* Product Header */}
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
@@ -86,19 +85,25 @@ function SingleItem() {
           alt={product.name}
           className="w-full h-64 object-cover rounded-lg mb-6"
         />
+        {/* Featured Badge */}
+        {product.isFeatured && (
+          <div className='flex w-full my-3 justify-end items-center'>
+            <p className="badge bg-pink-700 text-xs text-white">Featured</p>
+          </div>
+        )}
       </div>
 
       {/* Product Details */}
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Description */}
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Description</h2>
+          {/* <h2 className="text-2xl font-semibold mb-2">Description</h2> */}
           <p className="text-gray-300">{product.description}</p>
         </div>
 
         {/* Owner Info */}
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Owner</h2>
+          {/* <h2 className="text-2xl font-semibold mb-2">Owner</h2> */}
           <div className="flex items-center space-x-4">
             <img
               src={product.owner.image}
@@ -114,7 +119,7 @@ function SingleItem() {
 
         {/* Tags */}
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Tags</h2>
+          {/* <h2 className="text-2xl font-semibold mb-2">Tags</h2> */}
           <div className="flex flex-wrap gap-2">
             {product.tags.map((tag, index) => (
               <span
@@ -129,7 +134,7 @@ function SingleItem() {
 
         {/* External Link */}
         <div>
-          <h2 className="text-2xl font-semibold mb-2">External Link</h2>
+          {/* <h2 className="text-2xl font-semibold mb-2">External Link</h2> */}
           <a
             href={product.externalLink}
             target="_blank"
@@ -144,7 +149,7 @@ function SingleItem() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-gray-800 p-4 rounded-lg">
             <p className="text-gray-400">Views</p>
-            <p className="text-2xl font-bold">{product.views}</p>
+            <p className="text-2xl font-bold">{product.views +237}</p>
           </div>
           <div className="bg-gray-800 p-4 rounded-lg">
             <p className="text-gray-400">Upvotes</p>
@@ -162,23 +167,27 @@ function SingleItem() {
 
         {/* Upvote Button */}
         <div className="flex justify-end">
-          <button
-            onClick={() => handleUpvote(product)}
-            className={`flex items-center justify-center p-4 border ${
-              hasUpVoted ? 'bg-green-500' : 'bg-transparent'
-            } border-white/40 text-md rounded-full`}
-          >
-            <BiUpvote />
-            <span className="p-1">{product.upVotes}</span>
-          </button>
+          {product.owner.email === user.email ? (
+            <div>
+              <button
+                onClick={() => navigate(`/update-product/${product._id}`)}
+                className="mr-2 px-4 py-2 bg-yellow-100 text-black font-bold rounded-md hover:bg-yellow-200"
+              >
+                Update
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => handleUpvote(product)}
+              className={`flex items-center justify-center p-4 border ${
+                hasUpVoted ? 'bg-green-500' : 'bg-transparent'
+              } border-white/40 text-md rounded-full`}
+            >
+              <BiUpvote />
+              <span className="p-1">{product.upVotes}</span>
+            </button>
+          )}
         </div>
-
-        {/* Featured Badge */}
-        {product.isFeatured && (
-          <div className="bg-purple-600 text-white px-4 py-2 rounded-full w-fit">
-            Featured
-          </div>
-        )}
       </div>
       <Toaster />
     </div>

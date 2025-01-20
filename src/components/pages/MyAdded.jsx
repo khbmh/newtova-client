@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import THelmet from '../common/THelmet';
 import SecTitle from '../common/SecTitle';
 import { AuthContext } from '../context/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
+import { LuExternalLink } from 'react-icons/lu';
 
 function MyAdded() {
   const { user } = useContext(AuthContext); // Get user info from context
@@ -64,16 +65,16 @@ function MyAdded() {
           <table className="min-w-full bg-[#1f1f20] rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-800">
-                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                <th className="px-2 lg:px-6 py-3 text-left text-sm font-medium text-white">
                   Product Name
                 </th>
-                <th className="hidden lg:flex px-6 py-3 text-left text-sm font-medium text-white">
+                <th className="hidden lg:flex px-2 lg:px-6 py-3 text-left text-sm font-medium text-white">
                   Votes
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                <th className="px-2 lg:px-6 py-3 text-left text-sm font-medium text-white">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-white">
+                <th className="px-2 lg:px-6 py-3 text-left text-sm font-medium text-white">
                   Actions
                 </th>
               </tr>
@@ -81,13 +82,21 @@ function MyAdded() {
             <tbody>
               {products.map((product) => (
                 <tr key={product._id} className="border-b border-white/10">
-                  <td className="px-6 py-4 text-sm text-white">
-                    {product.name}
+                  <td className="px-2 lg:px-6 py-4 text-sm text-white">
+                    <Link
+                      to={`/product/${product._id}`}
+                      className="underline text-blue-100 flex gap-1 items-center justify-center"
+                    >
+                      {product.name}
+                      <span>
+                        <LuExternalLink />
+                      </span>
+                    </Link>
                   </td>
-                  <td className="hidden lg:flex px-6 py-4 text-sm text-white">
+                  <td className="hidden lg:flex px-2 lg:px-6 py-4 text-sm text-white">
                     {product.upVotes || 0}
                   </td>
-                  <td className="px-6 py-4 text-sm text-white">
+                  <td className="px-2 lg:px-6 py-4 text-sm text-white">
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         product.status === 'Accepted'
@@ -100,7 +109,7 @@ function MyAdded() {
                       {product.status || 'Pending'}
                     </span>
                   </td>
-                  <td className="flex flex-col lg:flex-row gap-2 items-center justify-center px-6 py-4 text-sm text-white">
+                  <td className="flex flex-col lg:flex-row gap-2 items-center justify-center px-2 lg:px-6 py-4 text-sm text-white">
                     <button
                       onClick={() => navigate(`/update-product/${product._id}`)}
                       className="mr-2 px-4 py-2 bg-yellow-100 text-black font-bold rounded-md hover:bg-yellow-200"
