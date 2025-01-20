@@ -124,7 +124,7 @@ function AllItems() {
             <p>Error fetching products. Please try again.</p>
           </div>
         ) : acceptedProducts.length === 0 ? (
-          <div className="flex flex-col gap-3 items-center justify-center h-[35vh]">
+          <div className="absolute flex w-full flex-col gap-3 items-center justify-center h-[35vh]">
             <img
               className="w-[200px] h-[200px] rounded-full opacity-50 grayscale"
               src="https://i.pinimg.com/originals/0d/89/ce/0d89cea578e0cbc7f2f66e79f56a5c4a.gif"

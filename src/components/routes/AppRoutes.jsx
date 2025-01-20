@@ -1,4 +1,3 @@
-import { Route, Routes } from 'react-router';
 import AddItem from '../pages/AddItem';
 import AllItems from '../pages/AllItems';
 import Home from '../pages/Home';
@@ -22,73 +21,85 @@ import Statistics from '../pages/Statistics';
 import ManageCoupons from '../pages/ManageCoupons';
 import ModeratorRoutes from './ModeratorRoutes';
 import AdminRoutes from './AdminRoutes';
+import SingleItem from '../pages/SingleItem';
+import { singleItemLoader } from '../utils/singleItemLoader';
 
-function AppRoutes() {
-  return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route
-          path="add-product"
-          element={
-            <PrivateRoutes>
-              <AddItem />
-            </PrivateRoutes>
-          }
-        />
-        <Route path="all-products" element={<AllItems />} />
-        <Route
-          path="moderator"
-          element={
-            <ModeratorRoutes>
-              <Moderator />
-            </ModeratorRoutes>
-          }
-        >
-          {/* <Route index element={<Profile />} /> */}
-          <Route path="product-review" element={<ProductReviewQueue />} />
-          <Route path="reported-contents" element={<ReportedContents />} />
-        </Route>
-        <Route
-          path="admin"
-          element={
-            <AdminRoutes>
-              <AdminDashboardLayout />
-            </AdminRoutes>
-          }
-        >
-          {/* <Route index element={<Profile />} /> */}
-          <Route path="users" element={<ManageUsers />} />
-          <Route path="statistics" element={<Statistics />} />
-          <Route path="coupons" element={<ManageCoupons />} />
-        </Route>
-        <Route
-          path="my"
-          element={
-            <PrivateRoutes>
-              <MyLayout />
-            </PrivateRoutes>
-          }
-        >
-          <Route index element={<Profile />} />
-          <Route path="added-products" element={<MyAdded />} />
-          <Route path="liked-items" element={<MyLiked />} />
-        </Route>
-      </Route>
-      <Route
-        path="auth"
-        element={
-          <PublicRoutes>
-            <AuthLayout />
-          </PublicRoutes>
-        }
-      >
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
-      <Route path="*" element={<Error />} />
-    </Routes>
-  );
-}
+const AppRoutes = [
+  {
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      {
+        path: 'add-product',
+        element: (
+          <PrivateRoutes>
+            <AddItem />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: '/product/:id',
+        element: (
+          <PrivateRoutes>
+            <SingleItem />
+          </PrivateRoutes>
+        ),
+        loader: singleItemLoader, // Add the loader here
+      },
+      { path: 'all-products', element: <AllItems /> },
+      {
+        path: 'moderator',
+        element: (
+          <ModeratorRoutes>
+            <Moderator />
+          </ModeratorRoutes>
+        ),
+        children: [
+          { path: 'product-review', element: <ProductReviewQueue /> },
+          { path: 'reported-contents', element: <ReportedContents /> },
+        ],
+      },
+      {
+        path: 'admin',
+        element: (
+          <AdminRoutes>
+            <AdminDashboardLayout />
+          </AdminRoutes>
+        ),
+        children: [
+          { path: 'users', element: <ManageUsers /> },
+          { path: 'statistics', element: <Statistics /> },
+          { path: 'coupons', element: <ManageCoupons /> },
+        ],
+      },
+      {
+        path: 'my',
+        element: (
+          <PrivateRoutes>
+            <MyLayout />
+          </PrivateRoutes>
+        ),
+        children: [
+          { index: true, element: <Profile /> },
+          { path: 'added-products', element: <MyAdded /> },
+          { path: 'liked-items', element: <MyLiked /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'auth',
+    element: (
+      <PublicRoutes>
+        <AuthLayout />
+      </PublicRoutes>
+    ),
+    children: [
+      { path: 'login', element: <Login /> },
+      { path: 'register', element: <Register /> },
+    ],
+  },
+  { path: '*', element: <Error /> },
+];
 
 export default AppRoutes;
