@@ -86,11 +86,11 @@ function Footer() {
         </div>
         <div className="flex justify-center items-center p-1">
           <a
-            href="https://khbmh.github.io/mahi"
+            href="https://mahi-here.netlify.app"
             target="blank"
-            className="text-white/70 text-sm"
+            className="text-white/70 text-sm group"
           >
-            Made by Mahi.
+            Made by <span className='underline group-hover:text-[#fff]'>Mahi</span>.
           </a>
         </div>
       </div>
