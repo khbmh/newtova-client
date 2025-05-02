@@ -1,9 +1,14 @@
 # Newtova - A Product Hunting Website
 
-Welcome to the **Newtova**, a platform where users can discover and share their tech products. This project is built using the MERN stack (MongoDB, Express.js, React.js, and Node.js) and includes features like user authentication, product submission, upvoting, reviews, and a payment system for premium features.
+![Newtova Full Web Application Screenshot](https://i.ibb.co/rY8WGw6/Newtova.png)
 
 ## Live Site URL
 [Visit the Live Site](https://newtova.web.app)
+
+
+## Project Overview
+Welcome to the **Newtova**, a platform where users can discover and share their tech products. This project is built using the MERN stack (MongoDB, Express.js, React.js, and Node.js) and includes features like user authentication, product submission, upvoting, reviews, and a payment system for premium features.
+
 
 ## Key Features
 - **User Authentication**: Secure login and registration with Google Sign-in support.
